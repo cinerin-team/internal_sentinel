@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlin.math.abs
 
 class MainActivity : ComponentActivity() {
     lateinit var sensorManager: SensorManager
@@ -19,10 +20,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Initialize the sensor manager and accelerometer sensor
+        // Initialize sensor manager and sensors
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION)
-            ?: error("No Accelerometer found")
+            ?: error("No Accelerometer found on this device.")
 
         setContent {
             SensorNavigationApp(sensorManager, accelerometer)
@@ -40,10 +41,17 @@ fun SensorNavigationApp(sensorManager: SensorManager, accelerometer: Sensor) {
     val sensorEventListener = remember {
         object : SensorEventListener {
             override fun onSensorChanged(event: SensorEvent?) {
-                if (event?.sensor?.type == Sensor.TYPE_LINEAR_ACCELERATION && isMeasuring) {
-                    // Calculate distance using the accelerometer
-                    distance += processAccelerometerData(event)
-                    pathLength += processPathLength(event)
+                try {
+                    if (event?.sensor?.type == Sensor.TYPE_LINEAR_ACCELERATION && isMeasuring) {
+                        val deltaDistance = processAccelerometerData(event)
+                        if (!deltaDistance.isNaN() && deltaDistance >= 0) {
+                            distance += deltaDistance
+                            pathLength += abs(deltaDistance) // Simplified path length
+                        }
+                    }
+                } catch (e: Exception) {
+                    // Handle exceptions
+                    e.printStackTrace()
                 }
             }
 
@@ -55,10 +63,8 @@ fun SensorNavigationApp(sensorManager: SensorManager, accelerometer: Sensor) {
 
     LaunchedEffect(isMeasuring) {
         if (isMeasuring) {
-            // Register sensor listener when measuring starts
             sensorManager.registerListener(sensorEventListener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
         } else {
-            // Unregister sensor listener when measuring stops
             sensorManager.unregisterListener(sensorEventListener)
         }
     }
@@ -114,13 +120,7 @@ fun SensorNavigationApp(sensorManager: SensorManager, accelerometer: Sensor) {
 }
 
 fun processAccelerometerData(event: SensorEvent): Double {
-    // Simplified logic to calculate distance from accelerometer data
-    val acceleration = event.values[0] // Linear acceleration in X-axis
-    val timeInterval = 0.02 // Example time interval (replace with actual time difference between events)
-    return acceleration * timeInterval // Distance = acceleration * time_interval (simplified)
-}
-
-fun processPathLength(event: SensorEvent): Double {
-    // This can use a similar logic as processAccelerometerData
-    return event.values[0] * 0.02 // Example path length calculation
+    val acceleration = event.values[0] // Assuming linear acceleration in X-axis
+    val timeInterval = 0.02 // Example time interval (adjust based on actual sensor delay)
+    return acceleration * timeInterval // Simplified distance calculation
 }
