@@ -47,4 +47,9 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview:1.5.0")
     implementation("androidx.activity:activity-compose:1.7.2")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.monitor)
+    implementation(libs.androidx.junit.ktx)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.testng)
 }
