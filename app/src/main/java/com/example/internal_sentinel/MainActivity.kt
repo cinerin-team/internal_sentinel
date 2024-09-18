@@ -1,3 +1,5 @@
+package com.example.internalsentinel
+
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
