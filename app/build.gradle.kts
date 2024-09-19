@@ -4,10 +4,10 @@ plugins {
 }
 
 android {
-    namespace = "com.example.internalsentinel"
+    namespace = "com.example.internal_sentinel"
     compileSdk = 34
     defaultConfig {
-        applicationId = "com.example.internalsentinel"
+        applicationId = "com.example.internal_sentinel"
         minSdk = 26
         targetSdk = 34
         versionCode = 1

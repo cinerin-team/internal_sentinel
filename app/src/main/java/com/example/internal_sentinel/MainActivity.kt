@@ -1,4 +1,4 @@
-package com.example.internalsentinel
+package com.example.internal_sentinel
 
 import android.hardware.Sensor
 import android.hardware.SensorEvent
