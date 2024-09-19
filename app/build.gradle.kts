@@ -41,5 +41,6 @@ dependencies {
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.monitor)
     implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.appcompat)
     testImplementation(libs.junit.junit)
 }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/distanceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Distance: 0"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/pathTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Path Length: 0"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp" />
+
+    <CheckBox
+        android:id="@+id/accelerometer_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Use Accelerometer"
+        android:checked="true"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:layout_marginTop="16dp"
+        android:background="#D3D3D3" />
+
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop"
+        android:layout_marginTop="16dp"
+        android:background="#D3D3D3"
+        android:enabled="false" />
+</LinearLayout>
